@@ -1,0 +1,89 @@
+# Netlify Configuration for Besorah Yeshua Ministry Website
+
+[build]
+  publish = "."
+  command = "echo 'No build command needed'"
+
+# Production context
+[context.production]
+  [context.production.environment]
+    NODE_VERSION = "18"
+
+# Redirect rules
+[[redirects]]
+  from = "/home"
+  to = "/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/home.html"
+  to = "/index.html"
+  status = 301
+
+# SPA fallback (404 handling)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+# Admin role redirect (if needed)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  conditions = { Role = ["admin"] }
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache Control for Assets
+[[headers]]
+  for = "/styles/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/scripts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML files - no cache
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Netlify Forms Configuration
+[forms]
+  # Spam filter settings
+  spam_filter = true
+  
+  # Notification settings (optional - configure in Netlify dashboard)
+  # email_notifications = true
+  
+  
+  
+  [[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = '''
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://www.paypal.com https://cdn.jsdelivr.net;
+      style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+      img-src 'self' data: https:;
+      font-src 'self' https://cdnjs.cloudflare.com;
+      connect-src 'self' https://api.anthropic.com;
+      frame-src https://www.paypal.com;
+    '''

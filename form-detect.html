@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Detection</title>
+</head>
+<body>
+    <!-- This file helps Netlify detect forms during build -->
+    <!-- Users will never see this page -->
+    
+    <!-- Contact Form -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="tel" name="phone" />
+        <select name="subject">
+            <option value="general">General Inquiry</option>
+            <option value="partnership">Partnership</option>
+            <option value="event-registration">Event Registration</option>
+            <option value="donation">Donation</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="text" name="event" />
+        <input type="text" name="church" />
+        <textarea name="message"></textarea>
+    </form>
+
+    <!-- Event Registration Form -->
+    <form name="event-registration" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="event-name" />
+        <input type="text" name="event-date" />
+        <input type="text" name="event-location" />
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="tel" name="phone" />
+        <input type="text" name="church" />
+        <textarea name="message"></textarea>
+    </form>
+</body>
+</html>
